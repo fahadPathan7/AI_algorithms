@@ -67,6 +67,7 @@ int main() {
     string source, destination;
     cin >> source >> destination;
 
+    dijkstra(source, destination);
     trackPath(destination, source);
 
     cout << "The path from " << source << " to " << destination << " is: " << endl;
