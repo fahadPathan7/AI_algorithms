@@ -142,7 +142,7 @@ void aiBestMove(char board[3][3]) {
     board[rowVal][colVal] = ai; // updating the best move for the ai. (final move)
 }
 // to check if the game will continue or not. win, loss or tie will be declared
-bool gameContinue(board) {
+bool gameContinue(char board[3][3]) {
     int score = checkBoard(board);
     if (score == 10) { // player has won
         cout << "Congratulations. You Win!" << endl;
