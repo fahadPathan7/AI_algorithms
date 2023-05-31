@@ -113,21 +113,36 @@ int minMax(char board[3][3], bool isMaximize) {
         return best;
     }
 }
+// printing the result
+void printResult(char board[3][3]) {
+    int score = checkBoard(board);
+    if (score == 10) { // player has won
+        cout << "Congratulations. You Win!" << endl;
+        //playGame = false;
+    }
+    else if (score == -10) { // player has lost
+        cout << "You Lost! Try again." << endl;
+        //playGame = false;
+    }
+    else {
+        cout << "Draw!" << endl;
+    }
+}
 // to check if the game will continue or not. win, loss or tie will be declared
 bool gameContinue(char board[3][3]) {
     int score = checkBoard(board);
     if (score == 10) { // player has won
-        cout << "Congratulations. You Win!" << endl;
+        //cout << "Congratulations. You Win!" << endl;
         playGame = false;
     }
     else if (score == -10) { // player has lost
-        cout << "You Lost! Try again." << endl;
+        //cout << "You Lost! Try again." << endl;
         playGame = false;
     }
     else {
         bool check = tieCheck(board);
         if (check) { // draw match
-            cout << "Draw!" << endl;
+            //cout << "Draw!" << endl;
             playGame = false;
         }
     }
@@ -146,10 +161,12 @@ void aiBestMove(char board[3][3]) {
 
                 int curScore = minMax(board, true);
 
-                cout << curScore << " "; //!
+                //cout << curScore << " "; //!
 
                 if (curScore == -10) {
-                    if (!gameContinue(board)) return;
+                    if (!gameContinue(board)) {
+                        return;
+                    }
                 }
 
                 board[row][col] = '_'; // as the move is not permanent yet so replacing it.
@@ -186,12 +203,18 @@ int main() {
         cout << "Players Move: " << endl;
         printBoard(board); // printing board after player's move
 
-        if (!gameContinue(board)) break; // checking for win, loss or draw
+        if (!gameContinue(board)) {
+            printResult(board);
+            break; // checking for win, loss or draw
+        }
 
         aiBestMove(board); // ai will give the best move
         cout << "AI move: " << endl;
         printBoard(board); // printing board after ai move
 
-        if (!gameContinue(board)) break; // checking for win, loss or draw
+        if (!gameContinue(board)) {
+            printResult(board);
+            break; // checking for win, loss or draw
+        }
     }
 }
