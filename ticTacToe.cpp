@@ -113,34 +113,6 @@ int minMax(char board[3][3], bool isMaximize) {
         return best;
     }
 }
-// to find the best move for the ai
-void aiBestMove(char board[3][3]) {
-    int bestScore = INT_MAX;
-    int rowVal = -1, colVal = -1; // row and column of the best move
-
-    for (int row = 0; row < 3; row++) {
-        for (int col = 0; col < 3; col++) {
-            if (board[row][col] == '_') {
-                board[row][col] = ai; // checking for every empty position
-
-                int curScore = minMax(board, true);
-
-                //cout << curScore << " "; //!
-
-                board[row][col] = '_'; // as the move is not permanent yet so replacing it.
-
-                // trying to get the minimum score for the player.
-                if (curScore < bestScore) {
-                    bestScore = curScore;
-                    rowVal = row;
-                    colVal = col;
-                }
-            }
-        }
-    }
-
-    board[rowVal][colVal] = ai; // updating the best move for the ai. (final move)
-}
 // to check if the game will continue or not. win, loss or tie will be declared
 bool gameContinue(char board[3][3]) {
     int score = checkBoard(board);
@@ -161,6 +133,38 @@ bool gameContinue(char board[3][3]) {
     }
 
     return playGame; // will the game continue or not
+}
+// to find the best move for the ai
+void aiBestMove(char board[3][3]) {
+    int bestScore = INT_MAX;
+    int rowVal = -1, colVal = -1; // row and column of the best move
+
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 3; col++) {
+            if (board[row][col] == '_') {
+                board[row][col] = ai; // checking for every empty position
+
+                int curScore = minMax(board, true);
+
+                cout << curScore << " "; //!
+
+                if (curScore == -10) {
+                    if (!gameContinue(board)) return;
+                }
+
+                board[row][col] = '_'; // as the move is not permanent yet so replacing it.
+
+                // trying to get the minimum score for the player.
+                if (curScore < bestScore) {
+                    bestScore = curScore;
+                    rowVal = row;
+                    colVal = col;
+                }
+            }
+        }
+    }
+
+    board[rowVal][colVal] = ai; // updating the best move for the ai. (final move)
 }
 
 int main() {
